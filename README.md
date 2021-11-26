@@ -7,11 +7,11 @@ Startup code with the following main libraries:
 [Material UI](https://github.com/mui-org/material-ui)
 [![LICENSE](https://img.shields.io/badge/license--lightgrey.svg)](https://github.com/https://github.com/enigma1/boilerplate-react-mui/blob/master/LICENSE.txt)
 
-#####This boilerplate includes
+##### This boilerplate includes
  - Supports nested routing and lazy loading of route components
  - Provides content and configuration for components with the aid of simple function hooks
 
-###Brief description of folders use in the tree
+### Brief description of folders use in the tree
 
 The pages folder holds the basic html and main components
 Individual sections can be found in the the Modules folder
