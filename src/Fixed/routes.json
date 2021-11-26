@@ -1,0 +1,10 @@
+{
+  "routes": [
+    {
+      "path": "//",
+      "component": "Home",
+      "type": "exact"
+     },
+     {"path":"*", "component": "Error"}
+  ]
+}

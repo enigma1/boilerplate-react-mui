@@ -1,0 +1,31 @@
+{
+  "App": {
+    "fallback": "Loading Page..."
+  },
+  "Error": {
+    "title": "Error Page",
+    "description": "The page you're looking for could not be found. <br />Use our menu links to navigate to the list of our products"
+  },
+  "Footer": {
+    "demoSite": "Boilerplate for ReactJS/MUI/Webpack",
+    "license": "- Made by MS (aka enigma1) - GNU/GPL v3.0 License.",
+    "desc": "The content and graphics of this site are used for demonstration purposes."
+  },
+  "Header": {
+    "name": "Main Header/Title"
+  },
+  "Home": {
+    "whatsNew": "Home Boilerplate - ReactJS/MUI/Webpack",
+    "newsAlert": "Desscription text for the home page goes here"
+  },
+  "Info": {
+    "title": "Information Component",
+    "desc": "Brief info here",
+    "mainContent": "Main information section for the information component"
+  },
+  "Intro": {
+    "title": "Introduction Component",
+    "desc": "Short description here",
+    "mainContent": "Main content text for introduction component"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "name": "boilerplate-react-mui",
+  "version": "0.0.1",
+  "author": "Mark Samios",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.0",
+    "@mui/material": "^5.2.1",
+    "@mui/x-data-grid": "^5.0.1",
+    "dompurify": "^2.3.3",
+    "nanoid": "^3.1.30",
+    "node-fetch": "^3.1.0",
+    "pouchdb-find": "^7.2.2",
+    "prop-types": "^15.7.2",
+    "pubsub-js": "^1.9.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^6.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/node": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-proposal-decorators": "^7.16.4",
+    "@babel/plugin-syntax-jsx": "^7.16.0",
+    "@babel/plugin-transform-object-assign": "^7.16.0",
+    "@babel/plugin-transform-react-constant-elements": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/plugin-transform-template-literals": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@svgr/webpack": "^5.5.0",
+    "@testing-library/jest-dom": "^5.15.1",
+    "@testing-library/react": "^12.1.2",
+    "babel-jest": "^27.3.1",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-root-import": "^6.6.0",
+    "copy-webpack-plugin": "^10.0.0",
+    "css-minimizer-webpack-plugin": "^3.2.0",
+    "dom-expressions": "^0.30.9",
+    "eslint": "^8.3.0",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.3.1",
+    "promise-polyfill": "^8.2.1",
+    "react-test-renderer": "^17.0.2",
+    "source-map-explorer": "^2.5.2",
+    "terser-webpack-plugin": "^5.2.5",
+    "webpack": "^5.64.3",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0"
+  },
+  "scripts": {
+    "prepare-update": "ncu -u",
+    "clean": "rm -rf webpack/development/ && rm -rf webpack/production",
+    "clean:all": "rm -rf node_modules/ && npm run clear && rm package-lock.json",
+    "test": "jest",
+    "test:clean": "jest -- -u",
+    "build": "npm run build:development",
+    "build:development": "webpack --config webpack/config.js --env type=dev --progress",
+    "build:production": "webpack --config webpack/config.js --env type=pro --progress",
+    "serve": "npm run serve:development",
+    "serve:development": "webpack-dev-server --https --config webpack/config.js --env type=dev",
+    "serve:production": "node webpack/production/boilerplate.production.js"
+  },
+  "files": [
+    "src/**/*.js",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ]
+  }
+}
