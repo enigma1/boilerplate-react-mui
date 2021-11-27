@@ -12,6 +12,7 @@ jsconfig.json
 # Environment
 reports/
 .tmp
+.cert
 local.log
 
 # NPM
