@@ -1,3 +1,5 @@
+// Default properties @ https://mui.com/customization/default-theme/
+
 import {createTheme} from '@mui/material/styles'
 
 const webTheme = createTheme({
@@ -8,5 +10,4 @@ const webTheme = createTheme({
   }
 })
 
-//console.log('wwww', webTheme);
 export default webTheme
