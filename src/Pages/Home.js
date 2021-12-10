@@ -1,4 +1,3 @@
-import {useStrings} from '!/hooks'
 import Header from '%/Common/Header'
 import Footer from '%/Common/Footer'
 import Intro from '%/Home/Intro'
@@ -10,18 +9,39 @@ import {
   Typography
 } from '@mui/material';
 
+const cStrings = {
+  "whatsNew": "Home Boilerplate - ReactJS/MUI/Webpack",
+  "newsAlert": "Desscription text for the home page goes here"
+};
+
+const cProps = {
+  whatsNew: {
+    color: "textPrimary",
+    component: "h1",
+    variant: "h6",
+    gutterBottom: true
+  },
+  newsAlert: {
+    color: "textSecondary",
+    variant: "body1",
+    gutterBottom: true
+  }
+}
+
+const cStyles = {
+  contentBox: {
+    margin: '8px 0px;',
+    padding: 16,
+  }
+}
+
 const Home = ({name}) => {
-  const cStrings = useStrings(name);
   return (<>
     <Container>
       <Header />
-      <Box sx={{m:2}}>
-        <Typography color="textPrimary" component="h1" variant="h6" gutterBottom>
-          {cStrings.whatsNew}
-        </Typography>
-        <Typography color="textSecondary" gutterBottom variant="body1">
-          {cStrings.newsAlert}
-        </Typography>
+      <Box css={cStyles.contentBox}>
+        <Typography {...cProps.whatsNew}>{cStrings.whatsNew}</Typography>
+        <Typography {...cProps.newsAlert}>{cStrings.newsAlert}</Typography>
       </Box>
       <Intro />
       <Footer />
@@ -30,7 +50,7 @@ const Home = ({name}) => {
 }
 
 Home.defaultProps = {
-  name: Home.name
+  name: Home.name,
 }
 
 export default Home;

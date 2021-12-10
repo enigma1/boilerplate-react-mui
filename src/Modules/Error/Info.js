@@ -1,4 +1,3 @@
-import {useStrings} from '!/hooks'
 import {red} from '@mui/material/colors'
 import {
   Avatar,
@@ -9,14 +8,26 @@ import {
   Typography
 } from '@mui/material';
 
+const cStrings = {
+  "title": "Information Component",
+  "desc": "Brief info here",
+  "mainContent": "Main information section for the information component"
+};
+
+const cStyles = {
+  avatar: {
+    bgcolor: red[900]
+  }
+}
+
 const Info = ({name}) => {
-  const cStrings = useStrings(name);
   return (
     <Paper elevation={3} sx={{my:1}}>
       <Card variant="outlined">
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[900] }}>
+            // <Avatar sx={{ bgcolor: red[900] }}>
+            <Avatar css={cStyles.avatar}>
               !
             </Avatar>
           }

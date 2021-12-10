@@ -1,4 +1,3 @@
-import {useStrings} from '!/hooks'
 import {
   AppBar,
   Box,
@@ -7,8 +6,18 @@ import {
   Typography
 } from '@mui/material';
 
+
+const cStrings = {
+  "name": "Main Header/Title"
+};
+
+const cStyles = {
+  title: {
+    flexGrow: 1
+  }
+}
+
 const Header = ({name, children}) => {
-  const cStrings = useStrings(name);
   return (<>
     <AppBar position="static" sx={{mb:2}}>
       <Toolbar>
@@ -20,7 +29,8 @@ const Header = ({name, children}) => {
           height: '100%',
           justifyContent: 'center'
         }}>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> */}
+          <Typography variant="h6" component="div" css={cStyles.title}>
             {cStrings.name}
           </Typography>
           {children}

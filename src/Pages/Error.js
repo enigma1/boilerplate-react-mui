@@ -1,4 +1,3 @@
-import {useStrings} from '!/hooks'
 import Header from '%/Common/Header'
 import Footer from '%/Common/Footer'
 import Info from '%/Error/Info'
@@ -9,8 +8,12 @@ import {
   Typography
 } from '@mui/material';
 
+const cStrings = {
+  "title": "Error Page",
+  "description": "The page you're looking for could not be found. <br />Use our menu links to navigate to the list of our products"
+};
+
 const Error = ({name}) => {
-  const cStrings = useStrings(name);
   return (<>
     <Container>
       <Header />
@@ -29,7 +32,7 @@ const Error = ({name}) => {
 }
 
 Error.defaultProps = {
-  name: Error.name
+  name: Error.name,
 }
 
 export default Error;

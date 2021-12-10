@@ -1,4 +1,8 @@
 {
+  "Main": {
+    "helmetTitle": "Boilerplate with ReactJS/MUI/Webpack",
+    "helmetMetaDescription": "Boilerplate/Seed Test/Demo"
+  },
   "App": {
     "fallback": "Loading Page..."
   },

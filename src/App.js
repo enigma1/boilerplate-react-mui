@@ -1,7 +1,11 @@
 import {useState, useEffect, lazy, Suspense} from 'react';
 import {Routes, Route, BrowserRouter as Router} from 'react-router-dom';
-import {useStrings} from '!/hooks'
 import * as routerData from "=/routes.json";
+
+const cStrings = {
+  "fallback": "Loading Page..."
+};
+
 
 const importer = ({component}) => lazy(() => import(`^/Pages/${component}`));
 
@@ -9,7 +13,6 @@ const AllRoutes = ({routes}) => <Routes>{routes}</Routes>
 
 const App = ({name}) => {
   const [routes, setRoutes] = useState([]);
-  const cStrings = useStrings(name);
 
   const promisedRoutes = ({routes}) => routes.map((entry, idx) => {
     const props = {...entry, component:importer(entry)};
