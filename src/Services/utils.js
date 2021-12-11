@@ -89,14 +89,16 @@ const sanitize = content => {
   return DOMPurify.sanitize(content)
 }
 
+
 const convertStrings = (stringsArray, matchPattern=/\$\{(\w+)\}/g) => {
-  let inp = stringsArray;
-  if( typeof inp === 'object' && !Array.isArray(inp) ) {
-    inp = [stringsArray];
-  } else if(!Array.isArray(inp)) {
+  let input = stringsArray;
+  isTrueObject(input) && (input = [stringsArray]);
+
+  if(!Array.isArray(input)) {
     throw `Error: invalid data type on convertStrings got ${typeof stringsArray} instead of an Array or Object`;
   }
-  const resultArray = inp.map(({str, params}) => {
+
+  const resultArray = input.map(({str, params}) => {
     const matches = str.matchAll(matchPattern);
     const segments = [];
     let offset=0;
@@ -113,6 +115,35 @@ const convertStrings = (stringsArray, matchPattern=/\$\{(\w+)\}/g) => {
   return resultArray.length>1?resultArray:resultArray.join("");
 }
 
+const remapStringInput = input => {
+  if(isTrueObject(input)) return input;
+
+  const defaultEntry = {str: '', params: {}};
+  let result = defaultEntry;
+
+  if(typeof input === 'string') {
+    result.str = input;
+  } else if(Array.isArray(input)) {
+    result = input.map(entry => {
+      if(typeof entry === 'string') return {str: entry, params:{}}
+      else if(isTrueObject(entry)) return entry;
+      else return defaultEntry;
+    })
+  }
+  return result;
+}
+
+const stringsTransformer = (input) => {
+  const converted = convertStrings(remapStringInput(input));
+  let result;
+  if(Array.isArray(converted)) {
+    result = converted.map(entry => sanitize(entry))
+  } else {
+    result = sanitize(converted);
+  }
+  return result;
+}
+
 export default {
   getRandomID,
   getUniqueID,
@@ -123,5 +154,6 @@ export default {
   isValidPassword,
   isValidName,
   convertStrings,
+  stringsTransformer,
   sanitize
 }

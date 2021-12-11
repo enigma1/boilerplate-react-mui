@@ -2,37 +2,32 @@ import {useInternals, useSequence} from '!/useServices'
 
 const act = {
   transform: (str, params) => ({
-    type: 'convertStrings',
+    type: 'stringsTransformer',
     data: [{str, params}]
   }),
-  sanitize: data => ({
-    type: 'sanitize',
-    data
-  })
 }
 
-const FragmentedString = ({service, string, params}) => {
+const Dummy = (value) => <>{value}</>
 
-  const {state, stateDispatch, middleware, view} = useInternals({
+const FragmentedString = ({services, string, params}) => {
+  const {stateDispatch, middleware, view} = useInternals({
     viewParams: {str: string, params},
-    dispatchers: service,
-
+    dispatchers: services,
   });
 
   const [utilsDispatch] = middleware;
 
   useSequence([
-    [utilsDispatch, act.transform(string, params), s => act.sanitize(s)],
-    [utilsDispatch,,s => view.str=s],
+    [utilsDispatch, act.transform(string, params), result => {view.str = result}],
     [stateDispatch]
   ],[string, params])
 
   return(
-    <span dangerouslySetInnerHTML={{__html: view.str}} />
+    <Dummy dangerouslySetInnerHTML={{__html: view.str}} />
   )
 };
 
 FragmentedString.defaultProps = {
-  service: 'utils'
+  services: 'utils'
 }
 export default FragmentedString;
