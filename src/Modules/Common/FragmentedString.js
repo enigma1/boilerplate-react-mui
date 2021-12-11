@@ -7,8 +7,6 @@ const act = {
   }),
 }
 
-const Dummy = (value) => <>{value}</>
-
 const FragmentedString = ({services, string, params}) => {
   const {stateDispatch, middleware, view} = useInternals({
     viewParams: {str: string, params},
@@ -23,7 +21,7 @@ const FragmentedString = ({services, string, params}) => {
   ],[string, params])
 
   return(
-    <Dummy dangerouslySetInnerHTML={{__html: view.str}} />
+    <span dangerouslySetInnerHTML={{__html: view.str}} />
   )
 };
 

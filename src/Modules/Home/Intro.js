@@ -50,7 +50,7 @@ const Intro = ({name}) => {
         />
         <CardContent>
           <Typography component="h2" variant="body2" css={[theme.contentHead, cStyles.mainContent]}>{cStrings.mainContent}</Typography>
-          <Counter range={[0, 10]} step={2} />
+          <Counter range={[10, 20]} step={2} />
         </CardContent>
       </Card>
     </Paper>

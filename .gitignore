@@ -10,6 +10,7 @@ jsconfig.json
 .git
 .idea
 .DS_Store
+.bash_history
 
 # Environment
 reports/
