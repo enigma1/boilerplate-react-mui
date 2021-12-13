@@ -79,7 +79,7 @@ const createDispatch = (input={}) => {
   return dispatchers;
 }
 
-export const useInternals = ({dispatchers, stateParams, viewParams}={}) => {
+export const useInternals = ({dispatchers, stateParams, viewParams}={}, actions={}) => {
 
   // Initialize state
   const [state, stateDispatch] = createDispatch(stateParams);
@@ -124,7 +124,7 @@ const dispatchSequencer = async (requests) => {
 
     const params = rqData || pastResults.last;
 
-    if(dispatch) {
+    if(dispatch && typeof dispatch === 'function') {
       result = callback
         ?(await callback(await dispatch(params), pastResults) || {})
         :(result = await dispatch(params) || {});

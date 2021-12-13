@@ -6,7 +6,6 @@ const cStrings = {
   "fallback": "Loading Page..."
 };
 
-
 const importer = ({component}) => lazy(() => import(`^/Pages/${component}`));
 
 const AllRoutes = ({routes}) => <Routes>{routes}</Routes>

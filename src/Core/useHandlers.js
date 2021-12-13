@@ -51,7 +51,7 @@ const defaultActionHandler = () => (state, action) => {
 // 2. Middleware service handling
 const serviceActionHandler = (entry) => (action) => {
   const {type, data} = action;
-  if(entry && type && !entry[type]) throw `Function [${type}] not defined in service [${entry.getTokenName()}]. Make sure you are using the right dispacher and the action is spelled correctly`
+  if(entry && type && !entry[type]) throw `Function [${type}] not defined in service [${entry.getTokenName?entry.getTokenName():'unknown'}]. Make sure you are using the right dispacher and the action is spelled correctly`
   const params = !data || (isTrueObject(data)?Object.assign({}, data):data);
   action.resolver(
     (entry && entry[type])
@@ -62,8 +62,8 @@ const serviceActionHandler = (entry) => (action) => {
 }
 
 // Reducers state-based and service/API
-export const defaultReducer = (reducer, state, initialState) => useReducer(reducer, state, initialState);
-export const serviceReducer = reducer => useReducer(reducer);
+const defaultReducer = (reducer, state, initialState) => useReducer(reducer, state, initialState);
+const serviceReducer = reducer => useReducer(reducer);
 
 // Types of reducers
 const reducerTypes = {
@@ -78,8 +78,23 @@ const reducerTypes = {
 }
 
 const createReducer = (name=defaultReducerName) => {
-  if(!activeServices[name]) {
-    name !== defaultReducerName && console.log(`%cwarning: No activeServices for service [${name}] found`, 'color: #ffff55')
+  if(!activeServices[name] && name !== defaultReducerName) {
+    console.log(`%cwarning: No activeServices for service [${name}] found - check if service exists`, 'color: #ffff55')
+    const error = `Non-existing service ${name}, cannot process request`;
+    activeServices[name] = new Proxy(() => ({error}), {
+      get(target, name) {
+        console.log(`%cwarning: Providing a default error function for [${name}] call`, 'color: #ffff55')
+        return target
+      }
+    })
+    // activeServices[name] = {
+    //   get: (props) => {
+    //     console.log('error', props)
+    //     return {error};
+    //   },
+    //   set: (props) => ({error})
+    // };
+  } else if(name === defaultReducerName) {
     activeServices[name] = {};
   }
 

@@ -1,0 +1,7 @@
+{
+  "up": "+",
+  "down": "-",
+  "reset": "Reset",
+  "value": "Current Counter is now at <strong>${unit}</strong> using a step of ${step}",
+  "title": "Counter Range: Min:<strong>${min}</strong> Max:<strong>${max}</strong> and <strong>${steps}</strong> steps"
+}
