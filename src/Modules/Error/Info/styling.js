@@ -1,8 +1,8 @@
-import {blue} from '@mui/material/colors'
+import {red} from '@mui/material/colors'
 
 export const cStyles = {
   avatar: {
-    backgroundColor: blue[900],
+    backgroundColor: red[900],
     fontWeight: 'bold'
   },
   divider: {
@@ -10,9 +10,10 @@ export const cStyles = {
   },
   mainContent: {
     padding: '8px 54px',
-    backgroundColor: blue[100]
+    backgroundColor: red[100]
   }
 }
+
 
 export const cProps = {
   pWrapper: {

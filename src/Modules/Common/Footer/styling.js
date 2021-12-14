@@ -1,6 +1,6 @@
 export const cStyles = {
   wrapper: {
-    // backgroundColor: 'background.default',
+    marginTop: '8px',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',

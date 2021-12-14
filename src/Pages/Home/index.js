@@ -1,3 +1,5 @@
+import cStrings from './strings.json'
+import {cStyles, cProps} from './styling'
 import Header from '%/Common/Header'
 import Footer from '%/Common/Footer'
 import Intro from '%/Home/Intro'
@@ -5,35 +7,8 @@ import Intro from '%/Home/Intro'
 import {
   Box,
   Container,
-  Divider,
   Typography
 } from '@mui/material';
-
-const cStrings = {
-  "whatsNew": "Home Boilerplate - ReactJS/MUI/Webpack",
-  "newsAlert": "Desscription text for the home page goes here"
-};
-
-const cProps = {
-  whatsNew: {
-    color: "textPrimary",
-    component: "h1",
-    variant: "h6",
-    gutterBottom: true
-  },
-  newsAlert: {
-    color: "textSecondary",
-    variant: "body1",
-    gutterBottom: true
-  }
-}
-
-const cStyles = {
-  contentBox: {
-    margin: '8px 0px;',
-    padding: 16,
-  }
-}
 
 const Home = () => {
   return (<>
