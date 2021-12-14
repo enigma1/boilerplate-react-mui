@@ -67,27 +67,26 @@ export const useReducer = (reducer, initialState) => {
 
 export const useConfig = (section) => useContext(GlobalConfig).configData[section] || {}
 
-const createDispatch = (input={}) => {
-  let dispatchers = []
-  if(isTrueObject(input)) {
-    dispatchers = getContext('state', input, input && (() => input));
-  } else {
-    const context = Array.isArray(input)?input:[input];
-    const contextMap = context.map(entry => getContext(entry));
-    dispatchers = contextMap.length>1?contextMap:contextMap[0];
+const createStateDispatch = (data) => {
+  let input = typeof data === 'function'?data():data;
+  input = data || {};
+  return getContext('state', input, input && (() => input));
+}
+
+const createServiceDispatch = (input) => {
+  if( !isStringArray(input) ) {
+    return ()=>Promise.resolve('Nothing todo - No API service was configured');
   }
-  return dispatchers;
+  const context = Array.isArray(input)?input:[input];
+  const contextMap = context.map(entry => getContext(entry));
+  return contextMap.length>1?contextMap:contextMap[0];
 }
 
 export const useInternals = ({dispatchers, stateParams, viewParams}={}, actions={}) => {
-
-  // Initialize state
-  const [state, stateDispatch] = createDispatch(stateParams);
-
-  // Initialize API
-  const serviceDispatchers = isStringArray(dispatchers)
-    ?createDispatch(dispatchers)
-    :()=>Promise.resolve('Nothing todo - No API service was configured');
+  // Initialize state and get its dispatcher
+  const [state, stateDispatch] = createStateDispatch(stateParams);
+  // Initialize Services and get equivalent dispatchers
+  const serviceDispatchers = createServiceDispatch(dispatchers);
 
   return {
     state,

@@ -35,7 +35,7 @@ const cStyles = {
   }
 }
 
-const Home = ({name}) => {
+const Home = () => {
   return (<>
     <Container>
       <Header />
@@ -47,10 +47,6 @@ const Home = ({name}) => {
       <Footer />
     </Container>
   </>);
-}
-
-Home.defaultProps = {
-  name: Home.name,
 }
 
 export default Home;
