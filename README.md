@@ -29,11 +29,15 @@ Arbitrary Communication among components can be established with the standard re
 #### Core
 
 - folder to use for custom Reactjs hooks
+- useServices.js state and services support code. Provides the means to separate logic from layout in components
+- useHandlers.js state and service handling for comonents. Keeps track of active services, provide handlers and a default state reducer. This is the main part of state management.
 
 #### Modules
 
 - Common Folder - All common modules used by components and modules like header and footer
 - Other Folders - Page-based naming component associated folders. Components of each page appear in a folder here.
+- Counter - Sample Counter Module with controls
+- Timer - Multi Timer component demonstrating separation of control logic from the visual aspects of the module
 
 #### Pages
 
@@ -57,3 +61,5 @@ Arbitrary Communication among components can be established with the standard re
 ### Other Info
 
 - babel.config.js uses relative path definitions to simplify path resolving
+- To simplify component properties I used one of the libraries for styling. In this case emotion/react. This is also used with the more recent versions of MUI
+- Complex components use a folder structure which consists of the index.js that holds the view/layout, controller.js that holds the component logic, strings.json providing associated strings and styling.js providing style and inline property spreading for components.
