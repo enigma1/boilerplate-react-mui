@@ -11,16 +11,23 @@ export const cStyles = {
   mainContent: {
     padding: '8px 54px',
     backgroundColor: blue[100]
+  },
+  outer: {
+    margin: '3px 0',
+  },
+  inner: {
+    backgroundColor: '#fafafa',
   }
 }
 
 export const cProps = {
-  pWrapper: {
+  paper: {
     elevation: 3,
-    margin: '3px 0',
+    css: cStyles.outer,
   },
   card: {
     variant: "outlined",
+    css: cStyles.inner
   },
   mainContent: {
     component: "h2",

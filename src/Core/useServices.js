@@ -147,17 +147,19 @@ export const useSequenceOnce = (requests) => {
   }
 };
 
-export const useSequence = (requests, types = []) => {
+export const useSequence = (requests, types = [], cleanup) => {
   const deps = monoDeps(types);
   useEffect(()=> {
     dispatchSequencer(requests);
+    return cleanup;
   }, (types !== 'render')?deps:undefined);
 };
 
-export const useDefined = (requests, deps, condition) => {
+export const useDefined = (requests, deps, condition, cleanup) => {
   useEffect(() => {
     if(deps.every(value => value !== condition)) {
       dispatchSequencer(requests);
+      return cleanup;
     }
   }, deps);
 }

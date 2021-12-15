@@ -1,9 +1,10 @@
 export const cStyles = {
   outer: {
     marginTop: '12px',
-    background: '#ECFFFF',
+    background: '#ECEFFF',
     border: '1px solid #399',
-    borderRadius: '12px'
+    borderRadius: '12px',
+    padding: '8px 0'
   },
   inner: {
     display: 'flex',

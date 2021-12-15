@@ -99,6 +99,9 @@ const convertStrings = (stringsArray, matchPattern=/\$\{(\w+)\}/g) => {
   }
 
   const resultArray = input.map(({str, params}) => {
+    str = str || '';
+    if(!params) return str;
+
     const matches = str.matchAll(matchPattern);
     const segments = [];
     let offset=0;

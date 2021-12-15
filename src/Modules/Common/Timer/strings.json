@@ -1,0 +1,7 @@
+{
+  "title": "Custom Multi-Directional Independent Timer",
+  "run": "Run",
+  "pause": "pause",
+  "reset": "reset",
+  "counters": "There are <strong>${size}</strong> counters, updating every <strong>${interval}mSecs</strong>"
+}
