@@ -9,6 +9,7 @@ const webTheme = createTheme({
     primary: orange,
   },
   contentHead: {
+    marginTop: 14,
     borderRadius: 8,
     padding: 28,
     boxShadow: '4px 4px gray;',

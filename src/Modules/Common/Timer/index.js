@@ -14,6 +14,7 @@ const Counters = ({list}) => {
 
 const Timer = ({using, ...props}) => {
   const {
+    iterations,
     isPaused,
     isRunning,
     onToggle, onReset,
@@ -32,7 +33,7 @@ const Timer = ({using, ...props}) => {
         <Button variant="contained" onClick={onReset} disabled={!isPaused}>{cStrings.reset}</Button>
       </Stack>
       <Typography {...cProps.display}>
-        <FragmentedString string={cStrings.counters} params={{size: counters.length, interval: props.interval}} />
+        <FragmentedString string={cStrings.counters} params={{size: counters.length, interval: props.interval, iterations}} />
       </Typography>
     </Box>
     </Container>

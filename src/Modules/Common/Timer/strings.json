@@ -3,5 +3,5 @@
   "run": "Run",
   "pause": "pause",
   "reset": "reset",
-  "counters": "There are <strong>${size}</strong> counters, updating every <strong>${interval}mSecs</strong>"
+  "counters": "There are <strong>${size}</strong> counters and <strong>${iterations}</strong> cycles performed so far, updating every <strong>${interval}mSecs</strong>"
 }

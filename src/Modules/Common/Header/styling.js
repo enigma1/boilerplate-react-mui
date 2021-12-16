@@ -1,12 +1,12 @@
 export const cStyles = {
-  wrapper: {
+  outer: {
+    marginTop: 8,
+  },
+  inner: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     justifyContent: 'center'
-  },
-  bar: {
-    marginBottom: 2,
   },
   title: {
     flexGrow: 1
@@ -14,9 +14,9 @@ export const cStyles = {
 }
 
 export const cProps = {
-  wrapper: {
+  appBar: {
     position: "static",
-    css: cStyles.bar,
+    css: cStyles.outer,
   },
   heading: {
     variant:"h6",

@@ -8,10 +8,6 @@ schema = {
 }
 */
 
-const initialState = {
-  run: false,
-}
-
 const transformSchemaToString = (value, counter) => {
   const max = Math.max(counter.min, counter.max);
   const min = Math.min(counter.min, counter.max);
@@ -22,20 +18,20 @@ const transformSchemaToString = (value, counter) => {
   return result;
 }
 
-const initializeCounters = counters => counters.map(schema => transformSchemaToString(0, schema));
+const initializeCounters = counters => counters.map(counter => transformSchemaToString(0, counter));
+const updateCounters = (value, counters) => counters.map(counter => transformSchemaToString(value, counter));
+
+const initialState = {run: false}
+const initialView = counters => ({pause: false, counters: initializeCounters(counters), trigger: 0})
 
 const controller = ({interval, counters}) => {
   const internals = useInternals({
     stateParams: initialState,
-    viewParams: {pause: false, counters: initializeCounters(counters), trigger: 0}
+    viewParams: initialView(counters),
   });
 
   const {state, stateDispatch, view} = internals;
   const {run} = state;
-
-  const updateCounters = (trigger) => {
-    view.counters = counters.map(schema => transformSchemaToString(trigger, schema))
-  }
 
   const stop = () => {
     view.timerID && clearInterval(view.timerID)
@@ -46,8 +42,7 @@ const controller = ({interval, counters}) => {
     if(view.timerID) return;
 
     view.timerID = setInterval(() => {
-      view.trigger++;
-      updateCounters(view.trigger)
+      view.counters = updateCounters(++view.trigger, counters)
       stateDispatch();
     }, interval);
   }
@@ -58,17 +53,17 @@ const controller = ({interval, counters}) => {
   ],[run], false, stop)
 
   return {
+    iterations: view.trigger,
+    counters: view.counters,
     isRunning: state.run,
     isPaused: (!state.run && view.trigger),
     onToggle: () => {
       stateDispatch({run: !run})
     },
     onReset: () => {
-      view.counters = initializeCounters(counters);
-      view.trigger = 0;
+      Object.assign(view, initialView(counters))
       stateDispatch(initialState)
     },
-    counters: view.counters,
     internals,
   }
 }

@@ -12,7 +12,7 @@ const monoDeps = (deps) => {
 
 const defaultReducer = (reducer, initialState, mount) => {
   const [state, setState] = reactReducer(reducer, initialState);
-  const error = `Component no longer mounted`;
+  const error = `Component no longer mounted, cannot use react state`;
   const dispatch = (action) => mount.current && setState(action);
   return mount.current?[state, dispatch]:[{error},()=>({error})];
 }
@@ -65,7 +65,10 @@ export const useReducer = (reducer, initialState) => {
   }
 }
 
-export const useConfig = (section) => useContext(GlobalConfig).configData[section] || {}
+export const useConfig = (section) => {
+  const ctx = useContext(GlobalConfig)
+  return ctx.configData[section] || ctx.configData;
+}
 
 const createStateDispatch = (data) => {
   let input = typeof data === 'function'?data():data;
@@ -82,7 +85,7 @@ const createServiceDispatch = (input) => {
   return contextMap.length>1?contextMap:contextMap[0];
 }
 
-export const useInternals = ({dispatchers, stateParams, viewParams}={}, actions={}) => {
+export const useInternals = ({dispatchers, stateParams, viewParams, cfgSection}={}) => {
   // Initialize state and get its dispatcher
   const [state, stateDispatch] = createStateDispatch(stateParams);
   // Initialize Services and get equivalent dispatchers
@@ -91,7 +94,7 @@ export const useInternals = ({dispatchers, stateParams, viewParams}={}, actions=
   return {
     state,
     stateDispatch,
-    gConfig: useContext(GlobalConfig),
+    cfg: useConfig(cfgSection),
     view: useRef(viewParams || {}).current,
     middleware: Array.isArray(serviceDispatchers)?serviceDispatchers:[serviceDispatchers],
   }
@@ -159,8 +162,8 @@ export const useDefined = (requests, deps, condition, cleanup) => {
   useEffect(() => {
     if(deps.every(value => value !== condition)) {
       dispatchSequencer(requests);
-      return cleanup;
     }
+    return cleanup;
   }, deps);
 }
 

@@ -12,9 +12,9 @@ import {
 
 const Header = ({children}) => {
   return (<>
-    <AppBar {...cProps.wrapper}>
+    <AppBar {...cProps.appBar}>
       <Toolbar>
-        <Box css={cStyles.wrapper}>
+        <Box css={cStyles.inner}>
           <Typography {...cProps.heading}>
             <FragmentedString string={cStrings.name}>Test</FragmentedString>
           </Typography>
