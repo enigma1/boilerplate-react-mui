@@ -1,6 +1,10 @@
 {
-  "NotesList": {
-    "pageSize": 5,
-    "rowsPerPageOptions": [5]
+  "language": {
+    "id": 1,
+    "string": "us"
+  },
+  "user": {
+    "id": 5,
+    "nick": "John Doe"
   }
 }

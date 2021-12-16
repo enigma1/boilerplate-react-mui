@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-react-mui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Mark Samios",
   "license": "GPL-3.0",
   "dependencies": {
@@ -54,15 +54,15 @@
     "webpack-dev-server": "^4.5.0"
   },
   "scripts": {
-    "prepare-update": "ncu -u",
-    "clean": "rm -rf webpack/development/ && rm -rf webpack/production",
+    "prepare-update": "clear && ncu -u",
+    "clean": "clear && rm -rf webpack/development/ && rm -rf webpack/production",
     "clean:all": "rm -rf node_modules/ && npm run clear && rm package-lock.json",
-    "test": "jest",
-    "test:clean": "jest -- -u",
-    "build": "npm run build:development",
+    "test": "clear && jest",
+    "test:clean": "clear && jest -- -u",
+    "build": "clear && npm run build:development",
     "build:development": "webpack --config webpack/config.js --env type=dev --progress",
     "build:production": "webpack --config webpack/config.js --env type=pro --progress",
-    "serve": "npm run serve:development",
+    "serve": "clear && npm run serve:development",
     "serve:development": "webpack-dev-server --https --config webpack/config.js --env type=dev",
     "serve:production": "node webpack/production/boilerplate.production.js"
   },

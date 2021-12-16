@@ -4,12 +4,13 @@
 package-lock.json
 
 # IDEs & OS
-.vscode/*
-!.vscode/extensions.json
+.vscode
+.fttemplates
 jsconfig.json
 .git
 .idea
 .DS_Store
+.bash_history
 
 # Environment
 reports/
