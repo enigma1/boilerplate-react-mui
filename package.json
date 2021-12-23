@@ -63,7 +63,7 @@
     "build:development": "webpack --config webpack/config.js --env type=dev --progress",
     "build:production": "webpack --config webpack/config.js --env type=pro --progress",
     "serve": "clear && npm run serve:development",
-    "serve:development": "webpack-dev-server --https --config webpack/config.js --env type=dev",
+    "serve:development": "webpack-dev-server --config webpack/config.js --env type=dev",
     "serve:production": "node webpack/production/boilerplate.production.js"
   },
   "files": [

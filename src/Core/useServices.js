@@ -1,9 +1,7 @@
 import {useReducer as reactReducer, useEffect, useRef, useContext} from 'react';
 import {getContext} from '!/useHandlers';
 import {GlobalConfig} from '=/dataContext';
-
-const isTrueObject = inp => typeof inp === 'object' && !Array.isArray(inp);
-const isStringArray = inp => typeof inp === 'string' || Array.isArray(inp);
+import {isStringArray} from '>/utils';
 
 const monoDeps = (deps) => {
   if( !deps || !Array.isArray(deps) || !deps.length) return [];

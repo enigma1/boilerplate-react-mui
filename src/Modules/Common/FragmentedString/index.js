@@ -9,7 +9,6 @@ const FragmentedString = ({using, ...props}) => {
 };
 
 FragmentedString.defaultProps = {
-  services: 'utils',
   using: useDefault,
 }
 export default FragmentedString;

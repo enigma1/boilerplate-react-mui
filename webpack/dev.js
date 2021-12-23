@@ -12,8 +12,9 @@ const dev = (name) => {
       static: `./public/${name}`,
       host: 'www.example.com',
       hot: true,
-      https:true,
-
+      server: {
+        type: 'https'
+      },
       // Set this for rewrites and to enable js router access
       historyApiFallback: true,
       headers: {

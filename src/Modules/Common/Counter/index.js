@@ -32,7 +32,6 @@ const Counter = ({using, ...props}) => {
 }
 
 Counter.defaultProps = {
-  name: Counter.name,
   using: useDefault,
 }
 
