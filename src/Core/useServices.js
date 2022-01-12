@@ -1,22 +1,22 @@
 import {useReducer as reactReducer, useEffect, useRef, useContext} from 'react';
 import {getContext} from '!/useHandlers';
 import {GlobalConfig} from '=/dataContext';
-import {isStringArray} from '>/utils';
+import {isStringArray, sortObject} from '>/utils'
 
 const monoDeps = (deps) => {
   if( !deps || !Array.isArray(deps) || !deps.length) return [];
-  return deps.map(item => typeof item ==='object'?JSON.stringify(item):item);
+  return deps.map(item => (item && typeof item ==='object')?sortObject(item):item);
 }
 
 const defaultReducer = (reducer, initialState, mount) => {
   const [state, setState] = reactReducer(reducer, initialState);
   const error = `Component no longer mounted, cannot use react state`;
-  const dispatch = (action) => mount.current && setState(action);
+  const dispatch = action => mount.current && setState(action);
   return mount.current?[state, dispatch]:[{error},()=>({error})];
 }
 
 // executes before first render
-export const useOnce = (f) => {
+export const useOnce = f => {
   const rendered = useRef(false);
   if(!rendered.current) {
     rendered.current = true;
@@ -57,9 +57,9 @@ export const useReducer = (reducer, initialState) => {
       return () => Promise.resolve({error});
     }
     // Setup a service promise and wait on it for the service to complete
-    const dispatcherPromise = new Promise((rs) => action.resolver = rs);
+    const dispatcherPromise = new Promise(rs => action.resolver = rs);
     reducer(action);
-    return dispatcherPromise.then(data => data);
+    return dispatcherPromise.then(data => data).catch(e => e);
   }
 }
 
@@ -68,14 +68,13 @@ export const useConfig = (section) => {
   return ctx.configData[section] || ctx.configData;
 }
 
-const createStateDispatch = (data) => {
-  let input = typeof data === 'function'?data():data;
-  input = data || {};
-  return getContext('state', input, input && (() => input));
+const createStateDispatch = data => {
+  const input = typeof data === 'function'?data():data;
+  return getContext('state', input||{}, input && (() => input));
 }
 
 const createServiceDispatch = (input) => {
-  if( !isStringArray(input) ) {
+  if( !isStringArray(input) || !input.length ) {
     return ()=>Promise.resolve('Nothing todo - No API service was configured');
   }
   const context = Array.isArray(input)?input:[input];
@@ -118,9 +117,15 @@ const dispatchSequencer = async (requests) => {
   let result, gotoStep;
   for(const [dispatch, rqData, callback, anchor, condition] of requests) {
 
-    if(gotoStep && gotoStep !== anchor) continue;
-    if(typeof condition === 'boolean' && !condition) continue;
-    else if(typeof condition === 'function' && !condition(pastResults)) continue;
+    // if(gotoStep && gotoStep !== anchor) continue;
+    // if(typeof condition === 'boolean' && !condition) continue;
+    // else if(typeof condition === 'function' && !condition(pastResults)) continue;
+
+    if([
+      gotoStep && gotoStep !== anchor,
+      typeof condition === 'boolean' && !condition,
+      typeof condition === 'function' && !condition(pastResults)
+    ].some(r => !!r)) continue;
 
     const params = rqData || pastResults.last;
 
@@ -156,12 +161,23 @@ export const useSequence = (requests, types = [], cleanup) => {
   }, (types !== 'render')?deps:undefined);
 };
 
-export const useDefined = (requests, deps, condition, cleanup) => {
+export const useDefined = (requests, types, filter, cleanup) => {
+  const deps = monoDeps(types);
+  if(!deps.length) return;
+
+  const condition = sortObject(filter);
   useEffect(() => {
-    if(deps.every(value => value !== condition)) {
-      dispatchSequencer(requests);
-    }
+    deps.every(value => value && value !== condition) && dispatchSequencer(requests);
     return cleanup;
   }, deps);
 }
 
+export const useSpecifics = (requests, types, specifics, cleanup) => {
+  if( !Array.isArray(specifics) || !specifics.length ) {
+    return;
+  }
+  useEffect(() => {
+    types.some((value,idx) => specifics[idx].includes(value)) && dispatchSequencer(requests);
+    return cleanup;
+  }, mono);
+}

@@ -1,7 +1,32 @@
 import DOMPurify from 'dompurify'
 
-export const isTrueObject = inp => typeof inp === 'object' && !Array.isArray(inp);
+export const isTrueObject = inp => inp && typeof inp === 'object' && !Array.isArray(inp);
 export const isStringArray = inp => typeof inp === 'string' || Array.isArray(inp);
+
+const comparisonTypes = {
+  jsonCompare: (a,b) => JSON.stringify(a)===JSON.stringify(b),
+  keysCompare: (a,b) => {
+    const ak = Object.keys(a).sort();
+    const bk = Object.keys(b).sort();
+    return JSON.stringify(ak)===JSON.stringify(bk)
+  },
+  shallowCheckFromLeft: (a,b) => {
+    return Object.entries(a).every((entry, key) => {
+      return (b[key] === entry);
+    })
+  }
+};
+export const compareObjects = (a,b, type=jsonCompare) =>
+  comparisonTypes[type]
+    ? comparisonTypes[type](a,b)
+    : false;
+
+export const sortObject = (input, json=true) => {
+  if(!isTrueObject(input)) return input;
+  const result = {};
+  Object.keys(input).sort().forEach(key => result[key] = input[key]);
+  return json?JSON.stringify(result):result;
+}
 
 const getRandomID = ({selection='a#', size=16}) => {
   const patterns = {
