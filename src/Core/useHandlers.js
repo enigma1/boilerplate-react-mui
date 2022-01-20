@@ -1,6 +1,6 @@
 import * as serviceMap from '=/services.json';
 import {useReducer} from '!/useServices';
-import {isTrueObject} from '>/utils';
+import {isTrueObject, compareObjects} from '>/utils';
 
 // Use stateDispatcher as the default handling
 const defaultReducerName = 'state';
@@ -39,7 +39,7 @@ const defaultActionHandler = () => (state, action) => {
   // Check if render-phase must be skipped callback and shallow check
   if(
     (typeof type === 'function' && type(state, payload)) ||
-    (data && utils.compareObjects(payload, state, 'shallowCheckFromLeft'))
+    (data && compareObjects(payload, state, 'shallowCheckFromLeft'))
   ) {
     return state;
   }

@@ -117,10 +117,6 @@ const dispatchSequencer = async (requests) => {
   let result, gotoStep;
   for(const [dispatch, rqData, callback, anchor, condition] of requests) {
 
-    // if(gotoStep && gotoStep !== anchor) continue;
-    // if(typeof condition === 'boolean' && !condition) continue;
-    // else if(typeof condition === 'function' && !condition(pastResults)) continue;
-
     if([
       gotoStep && gotoStep !== anchor,
       typeof condition === 'boolean' && !condition,

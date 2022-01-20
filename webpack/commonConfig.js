@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 import paths from '{}/paths'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
-import ContextReplacementPlugin from 'webpack/lib/ContextReplacementPlugin';
+// import ContextReplacementPlugin from 'webpack/lib/ContextReplacementPlugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 
 const ConsoleCleanupPlugin = () => {
@@ -52,10 +52,10 @@ const commonOptions = {
         {from: './assets', to: './', toType: 'dir'}
       ]
     }),
-    new ContextReplacementPlugin(/\/Pages/, './Pages', {
-      './request': './request',
-      './other-request': './new-request'
-    }),
+    // new ContextReplacementPlugin(/\/Pages/, './Pages', {
+    //   './request': './request',
+    //   './other-request': './new-request'
+    // }),
     new ESLintPlugin({
       extensions: '.js'
     }),
