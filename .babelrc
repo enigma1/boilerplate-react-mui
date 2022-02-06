@@ -28,7 +28,7 @@
         },
         {
           "rootPathPrefix": "!/",
-          "rootPathSuffix": "src/Core"
+          "rootPathSuffix": "src/core"
         },
         {
           "rootPathPrefix": "%/",
@@ -36,7 +36,7 @@
         },
         {
           "rootPathPrefix": ">/",
-          "rootPathSuffix": "src/Services"
+          "rootPathSuffix": "src/core/services"
         },
         {
           "rootPathPrefix": "{}/",
@@ -44,7 +44,7 @@
         },
         {
           "rootPathPrefix": "=/",
-          "rootPathSuffix": "src/Fixed"
+          "rootPathSuffix": "src/static"
         }
       ]
     }],

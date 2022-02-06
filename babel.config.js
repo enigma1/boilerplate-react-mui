@@ -1,5 +1,4 @@
 module.exports = (api) => {
-  console.log('Processing babel.config.js');
   api.cache(true);
   return {
     "env": {
@@ -26,7 +25,7 @@ module.exports = (api) => {
               {
                 root: __dirname,
                 "rootPathPrefix": "!/",
-                "rootPathSuffix": "src/Core"
+                "rootPathSuffix": "src/core"
               },
               {
                 root: __dirname,
@@ -36,7 +35,7 @@ module.exports = (api) => {
               {
                 root: __dirname,
                 "rootPathPrefix": ">/",
-                "rootPathSuffix": "src/Services"
+                "rootPathSuffix": "src/core/services"
               },
               {
                 root: __dirname,
@@ -46,7 +45,7 @@ module.exports = (api) => {
               {
                 root: __dirname,
                 "rootPathPrefix": "=/",
-                "rootPathSuffix": "src/Fixed"
+                "rootPathSuffix": "src/static"
               }
             ]
           }]
