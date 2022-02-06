@@ -8,7 +8,7 @@ const Counter = ({using, cStrings, cStyles, cProps, ...props}) => {
     onStepUp, onStepDown, onReset,
     isUpDisabled, isDownDisabled, cStep,
   } = using(props);
-console.log('called how many times?')
+
   return(<>
     <Container css={cStyles.outer}>
       <Box css={cStyles.inner}>
