@@ -1,4 +1,4 @@
-import useDefault from './controller'
+import {componentTypes, componentDefaults} from './settings';
 
 const FragmentedString = ({using, ...props}) => {
   const {view} = using(props);
@@ -8,7 +8,7 @@ const FragmentedString = ({using, ...props}) => {
   )
 };
 
-FragmentedString.defaultProps = {
-  using: useDefault,
-}
+FragmentedString.defaultProps = componentDefaults;
+FragmentedString.propTypes = componentTypes;
+
 export default FragmentedString;

@@ -10,24 +10,19 @@ const act = {
 
 const controller = ({string, params, children}) => {
   const internals = useInternals({
-    viewParams: {str: string?string:children, params},
+    viewParams: {str: string || children, params},
     dispatchers: act.services,
   });
   const {stateDispatch, middleware, view} = internals;
   const [utilsDispatch] = middleware;
 
-  const transform = useSequence([
+  useSequence([
     [utilsDispatch, act.transform(string, params), result => {view.str = result}],
     [stateDispatch]
   ],[string, params])
 
   return {
-    transform,
-    stateDispatch,
-    utilsDispatch,
     view,
-    string,
-    params,
     internals
   }
 }
