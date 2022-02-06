@@ -1,6 +1,5 @@
 import FragmentedString from '%/Common/FragmentedString'
-import cStrings from './strings.json'
-import {cStyles, cProps} from './styling'
+import {componentTypes, componentDefaults} from './settings';
 
 import {
   Box,
@@ -8,7 +7,7 @@ import {
   Typography
 } from '@mui/material';
 
-const Footer = ({fullYear}) => {
+const Footer = ({cStrings, cStyles, cProps, fullYear}) => {
   return(<>
     <Box css={cStyles.wrapper}>
       <Container maxWidth="md">
@@ -22,8 +21,8 @@ const Footer = ({fullYear}) => {
   </>);
 }
 
-Footer.defaultProps = {
-  fullYear: new Date().getFullYear()
-}
+Footer.defaultProps = componentDefaults;
+Footer.propTypes = componentTypes;
+
 
 export default Footer;

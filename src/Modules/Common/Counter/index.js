@@ -1,10 +1,8 @@
 import FragmentedString from '%/Common/FragmentedString'
-import cStrings from './strings.json'
-import {cStyles, cProps} from './styling'
-import useDefault from './controller'
+import {componentTypes, componentDefaults} from './settings';
 import { Avatar, Button, Box, Container, Stack, Typography } from '@mui/material';
 
-const Counter = ({using, ...props}) => {
+const Counter = ({using, cStrings, cStyles, cProps, ...props}) => {
   const {
     min, max, step,
     onStepUp, onStepDown, onReset,
@@ -31,8 +29,7 @@ const Counter = ({using, ...props}) => {
   </>);
 }
 
-Counter.defaultProps = {
-  using: useDefault,
-}
+Counter.defaultProps = componentDefaults;
+Counter.propTypes = componentTypes;
 
 export default Counter;

@@ -33,6 +33,7 @@
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
+    "@types/react-helmet": "^6.1.5",
     "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-root-import": "^6.6.0",

@@ -1,13 +1,5 @@
 import {useInternals, useDefined} from '!/useServices'
 
-/* Counter Schema
-schema = {
-  dir: 1, // incremental directional step, not 0 and within counter's range
-  min: 0, // Minimum counter value
-  max: 10 // Maximum counter value
-}
-*/
-
 const transformSchemaToString = (value, counter) => {
   const max = Math.max(counter.min, counter.max);
   const min = Math.min(counter.min, counter.max);

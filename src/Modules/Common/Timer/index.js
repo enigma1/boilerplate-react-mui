@@ -1,7 +1,5 @@
 import FragmentedString from '%/Common/FragmentedString'
-import cStrings from "./strings.json";
-import {cStyles, cProps} from "./styling.js";
-import useDefault from './controller'
+import {componentTypes, componentDefaults} from './settings';
 import {Avatar, Box, Button, Container, Stack, Typography} from '@mui/material';
 
 const Counters = ({list}) => {
@@ -12,7 +10,7 @@ const Counters = ({list}) => {
   })
 }
 
-const Timer = ({using, ...props}) => {
+const Timer = ({using, cStyles, cProps, cStrings, ...props}) => {
   const {
     iterations,
     isPaused,
@@ -40,12 +38,7 @@ const Timer = ({using, ...props}) => {
   </>)
 }
 
-Timer.defaultProps = {
-  interval: 3000,
-  counters: [
-    {dir: 1, min: 0, max: 10}
-  ],
-  using: useDefault,
-}
+Timer.defaultProps = componentDefaults;
+Timer.propTypes = componentTypes;
 
 export default Timer;

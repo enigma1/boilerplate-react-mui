@@ -1,6 +1,5 @@
 import FragmentedString from '%/Common/FragmentedString'
-import cStrings from './strings.json'
-import {cStyles, cProps} from './styling'
+import {componentTypes, componentDefaults} from './settings';
 
 import {
   AppBar,
@@ -10,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 
-const Header = ({children}) => {
+const Header = ({children, cStrings, cProps, cStyles}) => {
   return (<>
     <AppBar {...cProps.appBar}>
       <Toolbar>
@@ -25,6 +24,7 @@ const Header = ({children}) => {
   </>);
 }
 
-Header.defaultProps = {}
+Header.defaultProps = componentDefaults;
+Header.propTypes = componentTypes;
 
 export default Header;
