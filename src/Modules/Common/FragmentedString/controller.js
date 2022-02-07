@@ -1,23 +1,15 @@
 import {useSequence, useInternals} from '!/useServices'
 
-const act = {
-  services: 'utils',
-  transform: (str, params) => ({
-    type: 'stringsTransformer',
-    data: [{str, params}]
-  }),
-}
-
-const controller = ({string, params, children}) => {
+const controller = ({string, action, dispatchers, params, children}) => {
   const internals = useInternals({
     viewParams: {str: string || children, params},
-    dispatchers: act.services,
+    dispatchers,
   });
   const {stateDispatch, middleware, view} = internals;
   const [utilsDispatch] = middleware;
 
   useSequence([
-    [utilsDispatch, act.transform(string, params), result => {view.str = result}],
+    [utilsDispatch, action.transform(string, params), result => {view.str = result}],
     [stateDispatch]
   ],[string, params])
 

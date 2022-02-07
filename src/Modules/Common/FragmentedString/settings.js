@@ -1,6 +1,6 @@
 import useDefault from './controller'
 
-const dispachers = 'utils';
+const dispatchers = 'utils';
 
 const actionList = {
   transform: (str, params) => ({
@@ -12,11 +12,11 @@ const actionList = {
 export const componentTypes = {
   using: PropTypes.func.isRequired,
   action: PropTypes.object.isRequired,
-  dispachers: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+  dispatchers: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
 };
 
 export const componentDefaults = {
   using: useDefault,
   action: actionList,
-  dispachers
+  dispatchers
 }
