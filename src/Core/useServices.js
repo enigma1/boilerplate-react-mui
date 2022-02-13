@@ -1,7 +1,7 @@
 import {useReducer as reactReducer, useEffect, useRef, useContext} from 'react';
 import {getContext} from '!/useHandlers';
 import {GlobalConfig} from '=/dataContext';
-import {isStringArray, sortObject} from '>/utils'
+import {isTrueObject, isStringArray, sortObject, compareObjects} from '>/utils'
 
 const monoDeps = (deps) => {
   if( !deps || !Array.isArray(deps) || !deps.length) return [];
@@ -82,24 +82,56 @@ const createServiceDispatch = (input) => {
   return contextMap.length>1?contextMap:contextMap[0];
 }
 
-export const useInternals = ({dispatchers, stateParams, viewParams, cfgSection}={}) => {
+const localDispatch = (data, area, emptyDispatch=()=>{}) => {
+  if(!isTrueObject(area)) {
+    console.log(`current reference must be an object to mutate but got:`, area)
+    return;
+  }
+
+  if(isTrueObject(area.current) && !data) {
+    emptyDispatch();
+    return;
+  }
+
+  if(!isTrueObject(data)) {
+    if(!compareObjects(data, area.current)) {
+      area.current = data;
+      emptyDispatch();
+    }
+    return area.current;
+  }
+
+  const {rs, ...input} = data;
+
+  const update = isTrueObject(area.current)?{...area.current, ...input}:input;
+  if(!compareObjects(update, area.current)) {
+    area.current = update;
+    emptyDispatch();
+  }
+
+  rs && typeof rs === 'function' && rs(area.current);
+  return area.current;
+}
+
+export const useInternals = ({dispatchers, stateParams, viewParams={}, cfgSection, dismount}) => {
+  const viewArea = useRef(stateParams);
+
   // Initialize state and get its dispatcher
   const [state, stateDispatch] = createStateDispatch(stateParams);
+  const viewDispatch = data => localDispatch(data, viewArea, stateDispatch);
   // Initialize Services and get equivalent dispatchers
   const serviceDispatchers = createServiceDispatch(dispatchers);
+
+  dismount && useEffect(() => dismount, []);
 
   return {
     state,
     stateDispatch,
+    stage: data => ({toStage: data}),
+    view: useRef(viewParams).current,
+    viewDispatch,
     cfg: useConfig(cfgSection),
-    view: useRef(viewParams || {}).current,
     middleware: Array.isArray(serviceDispatchers)?serviceDispatchers:[serviceDispatchers],
-  }
-}
-
-const validateSteps = requests => {
-  if( !requests.every(value => Array.isArray(value)) ) {
-    throw new Error(`Entry not an array - check the sequencer, each entry must be an array`);
   }
 }
 

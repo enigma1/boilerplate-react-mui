@@ -3,6 +3,14 @@ import DOMPurify from 'dompurify'
 export const isTrueObject = inp => inp && typeof inp === 'object' && !Array.isArray(inp);
 export const isStringArray = inp => typeof inp === 'string' || Array.isArray(inp);
 
+export const sortObject = (input, json=true) => {
+  if(!isTrueObject(input)) return input;
+  const result = {};
+  const list = Object.keys(input).sort()
+  for(const key of list) result[key] = input[key];
+  return json?JSON.stringify(result):result;
+}
+
 const comparisonTypes = {
   jsonCompare: (a,b) => JSON.stringify(a)===JSON.stringify(b),
   keysCompare: (a,b) => {
@@ -21,12 +29,7 @@ export const compareObjects = (a,b, type=jsonCompare) =>
     ? comparisonTypes[type](a,b)
     : false;
 
-export const sortObject = (input, json=true) => {
-  if(!isTrueObject(input)) return input;
-  const result = {};
-  Object.keys(input).sort().forEach(key => result[key] = input[key]);
-  return json?JSON.stringify(result):result;
-}
+const compareItems = ({items, type}) => compareObjects(items[0], items[1], type);
 
 const getRandomID = ({selection='a#', size=16}) => {
   const patterns = {
@@ -58,6 +61,16 @@ const getParamsFromQuery = (query, param=null) => {
   if( param ) {
     return result[param];
   }
+  return result;
+}
+
+export const getQueryFromParams = params => {
+  if(!isTrueObject(params)) return "";
+
+  const result = Object.entries(params).reduce( (p, [key, value])=> {
+    const previous = p?`${p}&`:"";
+    return `${previous}${key}=${value}`;
+  },"")
   return result;
 }
 
@@ -183,5 +196,6 @@ export default {
   isValidName,
   convertStrings,
   stringsTransformer,
-  sanitize
+  sanitize,
+  compareItems
 }
