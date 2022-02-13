@@ -42,7 +42,7 @@ const controller = ({interval, counters}) => {
   useDefined([
     [,,start,,run],
     [,,stop,,!run],
-  ],[run], false, stop)
+  ],[run], false, undefined, stop)
 
   return {
     iterations: view.trigger,
