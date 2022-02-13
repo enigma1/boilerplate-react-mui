@@ -3,6 +3,11 @@ import {getContext} from '!/useHandlers';
 import {GlobalConfig} from '=/dataContext';
 import {isTrueObject, isStringArray, sortObject, compareObjects} from '>/utils'
 
+const getConditionFromFilter = filter => {
+  if(typeof filter === 'function') return filter();
+  return sortObject(filter);
+}
+
 const monoDeps = (deps) => {
   if( !deps || !Array.isArray(deps) || !deps.length) return [];
   return deps.map(item => (item && typeof item ==='object')?sortObject(item):item);
@@ -135,17 +140,25 @@ export const useInternals = ({dispatchers, stateParams, viewParams={}, cfgSectio
   }
 }
 
+const validateSteps = requests => {
+  if( !requests.every(value => Array.isArray(value)) ) {
+    throw new Error(`Entry not an array - check the sequencer entries, each entry must be an array`);
+  }
+}
+
 // Each array of the sequence dispatcher can take the following optional arguments
 // dispatch - dispatcher (stateDispatch, apiDispatch etc)
 // rqData - dispatcher data (state data, action data etc)
 // callback - function to be called once dispatcher finishes
 // anchor - label/mark in sequence can alter sequence execution
 // condition - boolean or function - true/false whether to execute entry
-const dispatchSequencer = async (requests) => {
+const dispatchSequencer = async requests => {
   validateSteps(requests);
   const pastResults = {
     last: undefined
   };
+  const staged = [];
+
   let result, gotoStep;
   for(const [dispatch, rqData, callback, anchor, condition] of requests) {
 
@@ -155,7 +168,13 @@ const dispatchSequencer = async (requests) => {
       typeof condition === 'function' && !condition(pastResults)
     ].some(r => !!r)) continue;
 
-    const params = rqData || pastResults.last;
+    let params = pastResults.last;
+    if(typeof rqData === 'function') {
+      params = rqData(pastResults)
+    } else if(rqData) {
+      params = rqData;
+    }
+    //const params = rqData || pastResults.last;
 
     if(dispatch && typeof dispatch === 'function') {
       result = callback
@@ -165,47 +184,68 @@ const dispatchSequencer = async (requests) => {
       result = await callback({}, pastResults);
     }
 
-    const {abort, goto} = pastResults.last = result || {};
+    const {abort, goto, toStage} = pastResults.last = result || {};
     if(abort) break;
 
+    if(toStage) {
+      staged.push(toStage);
+      pastResults.last = undefined;
+    }
     anchor && (pastResults[anchor] = result);
     gotoStep = goto;
   }
+  return staged;
 }
 
-export const useSequenceOnce = (requests) => {
+const mergeStaged = stages => {
+  const merged = stages.reduce( (p,c) => {
+    return {...p, ...c}
+  },{})
+  return merged
+}
+
+const dispatchStaged = async (staged, dispatch) => {
+  if(!dispatch) return;
+  const mergedState = mergeStaged(await staged)
+  dispatch({data: mergedState});
+}
+
+export const useSequenceOnce = (requests, dispatch) => {
   const rendered = useRef(false);
   if(!rendered.current) {
     rendered.current = true;
-    dispatchSequencer(requests);
+    dispatchStaged(dispatchSequencer(requests), dispatch)
   }
 };
 
-export const useSequence = (requests, types = [], cleanup) => {
+export const useSequence = (requests, types = [], dispatch, cleanup) => {
   const deps = monoDeps(types);
   useEffect(()=> {
-    dispatchSequencer(requests);
+    dispatchStaged(dispatchSequencer(requests), dispatch)
     return cleanup;
   }, (types !== 'render')?deps:undefined);
 };
 
-export const useDefined = (requests, types, filter, cleanup) => {
+export const useDefined = (requests, types, filter, dispatch, cleanup) => {
   const deps = monoDeps(types);
   if(!deps.length) return;
 
-  const condition = sortObject(filter);
+  const condition = getConditionFromFilter(filter);
   useEffect(() => {
-    deps.every(value => value && value !== condition) && dispatchSequencer(requests);
+    deps.every(value => value && value !== condition)
+      && dispatchStaged(dispatchSequencer(requests), dispatch)
     return cleanup;
   }, deps);
 }
 
-export const useSpecifics = (requests, types, specifics, cleanup) => {
+export const useSpecifics = (requests, types, specifics, dispatch, cleanup) => {
   if( !Array.isArray(specifics) || !specifics.length ) {
     return;
   }
+  const deps = monoDeps(types);
   useEffect(() => {
-    types.some((value,idx) => specifics[idx].includes(value)) && dispatchSequencer(requests);
+    types.some((value,idx) => specifics[idx].includes(value))
+      && dispatchStaged(dispatchSequencer(requests), dispatch)
     return cleanup;
-  }, mono);
+  }, deps);
 }
