@@ -1,6 +1,5 @@
 import cStrings from './strings.json'
 import {cStyles, cProps} from './styling'
-import {red} from '@mui/material/colors'
 import {
   Avatar,
   Card,
@@ -17,7 +16,7 @@ const headerProps = {
   subheader: cStrings.desc
 }
 
-const Info = ({name}) => {
+const Info = () => {
   return (
     <Paper {...cProps.pWrapper}>
     <Card {...cProps.card}>
@@ -29,10 +28,6 @@ const Info = ({name}) => {
     </Card>
     </Paper>
   )
-}
-
-Info.defaultProps = {
-  name: Info.name,
 }
 
 export default Info

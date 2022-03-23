@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-react-mui",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Mark Samios",
   "license": "GPL-3.0",
   "dependencies": {
@@ -10,7 +10,6 @@
     "@mui/material": "^5.4.0",
     "dompurify": "^2.3.5",
     "nanoid": "^3.2.0",
-    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
@@ -43,6 +42,8 @@
     "dom-expressions": "^0.32.1",
     "eslint": "^8.8.0",
     "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-react": "^7.29.4",
     "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",

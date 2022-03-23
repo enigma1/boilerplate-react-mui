@@ -6,6 +6,7 @@ import '^/globals.js'
 
 import Counter from '%/Common/Counter'
 
+const {debug} = screen;
 describe('Counter Tests', () => {
   test('<Counter /> Initial', async () => {
     const cStringsMock = jest.fn().mockReturnValue({
@@ -20,7 +21,7 @@ describe('Counter Tests', () => {
       isUpDisabled: false, isDownDisabled: true, cStep: 1,
     }));
 
-    const {debug, getByText} = render(<Counter range={[10, 100]} step={1} using={controllerMock} cStrings={cStringsMock()} />);
+    const {getByText} = render(<Counter range={[10, 100]} step={1} using={controllerMock} cStrings={cStringsMock()} />);
 
     await waitFor(() => {
       //debug();

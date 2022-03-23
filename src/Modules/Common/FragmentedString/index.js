@@ -1,14 +1,12 @@
-import {componentTypes, componentDefaults} from './settings';
+import {componentDefaults} from './settings';
 
 const FragmentedString = ({using, ...props}) => {
-  const {view} = using(props);
-
+  const {convertedString} = using(props);
   return(
-    <span dangerouslySetInnerHTML={{__html: view.str}} />
+    <span className="fragmented-string" dangerouslySetInnerHTML={{__html: convertedString}} />
   )
 };
 
 FragmentedString.defaultProps = componentDefaults;
-FragmentedString.propTypes = componentTypes;
 
 export default FragmentedString;

@@ -16,14 +16,15 @@ const updateCounters = (value, counters) => counters.map(counter => transformSch
 const initialState = {run: false}
 const initialView = counters => ({pause: false, counters: initializeCounters(counters), trigger: 0})
 
-const controller = ({interval, counters}) => {
+const control = ({interval, counters}) => {
   const internals = useInternals({
     stateParams: initialState,
     viewParams: initialView(counters),
   });
 
-  const {state, stateDispatch, view} = internals;
+  const {state, actions, view} = internals;
   const {run} = state;
+  const {$default} = actions;
 
   const stop = () => {
     view.timerID && clearInterval(view.timerID)
@@ -35,13 +36,13 @@ const controller = ({interval, counters}) => {
 
     view.timerID = setInterval(() => {
       view.counters = updateCounters(++view.trigger, counters)
-      stateDispatch();
+      $default();
     }, interval);
   }
 
   useDefined([
-    [,,start,,run],
-    [,,stop,,!run],
+    [,start,,run],
+    [,stop,,!run],
   ],[run], false, undefined, stop)
 
   return {
@@ -50,14 +51,14 @@ const controller = ({interval, counters}) => {
     isRunning: state.run,
     isPaused: (!state.run && view.trigger),
     onToggle: () => {
-      stateDispatch({run: !run})
+      $default({run: !run})
     },
     onReset: () => {
       Object.assign(view, initialView(counters))
-      stateDispatch(initialState)
+      $default(initialState)
     },
     internals,
   }
 }
 
-export default controller;
+export default control;
