@@ -3,7 +3,7 @@ import cStrings from './strings.json'
 import {cStyles, cProps} from './styling.js'
 import Counter from '%/Common/Counter'
 import Timer from '%/Common/Timer'
-import useCounter from '%/Common/Counter/controller'
+import useCounter from '%/Common/Counter/control'
 
 import {
   Avatar,

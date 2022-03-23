@@ -21,6 +21,12 @@ const dev = (name) => {
         "Access-Control-Allow-Origin": "*",
       },
       open: false,
+      client: {
+        overlay: {
+          warnings: false,
+          errors: true
+        }
+      }
     },
     mode: name,
     devtool: 'source-map'

@@ -5,7 +5,7 @@ import Meta from '%/Common/Meta'
 import dataContext, {GlobalConfig} from '=/dataContext'
 import webTheme from '=/webTheme'
 import {serviceImporter} from '!/useHandlers';
-import App from '^/App.js';
+import App from '^/App';
 
 const cStrings = {
   "helmetTitle": "Boilerplate with ReactJS/MUI/Webpack",
